@@ -13,6 +13,9 @@ class MovieProfilePage extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    const collapsedBarHeight = 60.0;
+    const expandedBarHeight = 400.0;
+
     final scrollController = useScrollController();
     final isCollapsed = useState(false);
     final didAddFeedback = useState(false);
@@ -20,7 +23,7 @@ class MovieProfilePage extends HookWidget {
     return NotificationListener<ScrollNotification>(
       onNotification: (notification) {
         isCollapsed.value = scrollController.hasClients &&
-            scrollController.offset > (400 - kToolbarHeight);
+            scrollController.offset > (expandedBarHeight - collapsedBarHeight);
         if (isCollapsed.value && !didAddFeedback.value) {
           HapticFeedback.mediumImpact();
           didAddFeedback.value = true;
@@ -53,8 +56,8 @@ class MovieProfilePage extends HookWidget {
             controller: scrollController,
             slivers: [
               SliverAppBar(
-                expandedHeight: 400,
-                toolbarHeight: 60,
+                expandedHeight: expandedBarHeight,
+                collapsedHeight: collapsedBarHeight,
                 centerTitle: false,
                 pinned: true,
                 title: AnimatedOpacity(
