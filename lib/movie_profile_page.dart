@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:custom_sliver_app_bar/blurred_backdrop_image.dart';
 import 'package:custom_sliver_app_bar/widgets/expanded_app_bar_content.dart';
 import 'package:custom_sliver_app_bar/models/MovieDetails.dart';
 import 'package:flutter/material.dart';
@@ -34,24 +35,7 @@ class MovieProfilePage extends HookWidget {
       },
       child: Stack(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(
-                  movieDetails.backdropPath ?? '',
-                ),
-                fit: BoxFit.cover,
-              ),
-            ),
-            height: MediaQuery.of(context).size.height / 1.5,
-            child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 7.0, sigmaY: 7.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.0),
-                  ),
-                )),
-          ),
+          BlurredBackdropImage(movieDetails: movieDetails),
           CustomScrollView(
             controller: scrollController,
             slivers: [
