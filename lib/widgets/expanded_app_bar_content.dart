@@ -1,4 +1,4 @@
-import 'package:custom_sliver_app_bar/models/MovieDetails.dart';
+import 'package:custom_sliver_app_bar/models/movie_details.dart';
 import 'package:custom_sliver_app_bar/widgets/index.dart';
 import 'package:flutter/material.dart';
 

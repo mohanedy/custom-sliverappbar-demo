@@ -2,7 +2,7 @@
 import 'package:custom_sliver_app_bar/blurred_backdrop_image.dart';
 import 'package:custom_sliver_app_bar/collapsed_app_bar_content.dart';
 import 'package:custom_sliver_app_bar/page_body_widget.dart';
-import 'package:custom_sliver_app_bar/models/MovieDetails.dart';
+import 'package:custom_sliver_app_bar/models/movie_details.dart';
 import 'package:custom_sliver_app_bar/widgets/expanded_app_bar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

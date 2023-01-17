@@ -1,6 +1,6 @@
 
 import 'package:custom_sliver_app_bar/favorite_button_widget.dart';
-import 'package:custom_sliver_app_bar/models/MovieDetails.dart';
+import 'package:custom_sliver_app_bar/models/movie_details.dart';
 import 'package:custom_sliver_app_bar/watch_now_button_widget.dart';
 import 'package:flutter/material.dart';
 
