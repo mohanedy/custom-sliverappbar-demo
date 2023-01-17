@@ -1,8 +1,10 @@
 import 'dart:ui';
 
 import 'package:custom_sliver_app_bar/blurred_backdrop_image.dart';
+import 'package:custom_sliver_app_bar/collapsed_app_bar_content.dart';
 import 'package:custom_sliver_app_bar/page_body_widget.dart';
 import 'package:custom_sliver_app_bar/models/MovieDetails.dart';
+import 'package:custom_sliver_app_bar/widgets/expanded_app_bar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -47,30 +49,7 @@ class MovieProfilePage extends HookWidget {
                 title: AnimatedOpacity(
                   duration: const Duration(milliseconds: 200),
                   opacity: isCollapsed.value ? 1 : 0,
-                  child: Row(
-                    children: [
-                      Text(
-                        movieDetails.title ?? '',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const Spacer(),
-                      SizedBox(
-                        height: 40,
-                        child: Image.network(
-                          movieDetails.productionCompanies?.first.logoPath ??
-                              '',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      )
-                    ],
-                  ),
+                  child: CollapsedAppBarContent(movieDetails: movieDetails),
                 ),
                 elevation: 0,
                 backgroundColor:
