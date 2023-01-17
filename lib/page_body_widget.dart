@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:custom_sliver_app_bar/favorite_button_widget.dart';
 import 'package:custom_sliver_app_bar/models/MovieDetails.dart';

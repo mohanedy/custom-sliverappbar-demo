@@ -1,8 +1,6 @@
-import 'dart:ui';
 
 import 'package:custom_sliver_app_bar/models/MovieDetails.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class CollapsedAppBarContent extends StatelessWidget {
   const CollapsedAppBarContent({
