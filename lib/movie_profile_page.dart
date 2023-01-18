@@ -1,4 +1,3 @@
-
 import 'package:custom_sliver_app_bar/blurred_backdrop_image.dart';
 import 'package:custom_sliver_app_bar/collapsed_app_bar_content.dart';
 import 'package:custom_sliver_app_bar/page_body_widget.dart';
