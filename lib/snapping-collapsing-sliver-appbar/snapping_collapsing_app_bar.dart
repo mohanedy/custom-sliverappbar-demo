@@ -5,7 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 class SnappingCollapsingAppBar extends HookWidget {
   const SnappingCollapsingAppBar({
-    Key? key,
+    super.key,
     required this.expandedBar,
     required this.collapsedBar,
     required this.body,
@@ -23,7 +23,7 @@ class SnappingCollapsingAppBar extends HookWidget {
     this.collapsedBarHeight = 60.0,
     this.backdropWidget,
     this.backgroundColor,
-  }) : super(key: key);
+  });
 
   final ScrollController? scrollController;
 

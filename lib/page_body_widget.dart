@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 ///includes the watch now, favorite buttons and the movie introduction
 class PageBodyWidget extends StatelessWidget {
   const PageBodyWidget({
-    Key? key,
+    super.key,
     required this.movieDetails,
-  }) : super(key: key);
+  });
 
   final MovieDetails movieDetails;
 
@@ -54,7 +54,7 @@ class PageBodyWidget extends StatelessWidget {
             style: const TextStyle(
               fontSize: 14,
             ),
-          )
+          ),
         ],
       ),
     );

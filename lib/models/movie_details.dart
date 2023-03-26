@@ -1,30 +1,31 @@
 class MovieDetails {
   MovieDetails({
-      bool? adult, 
-      String? backdropPath, 
-      BelongsToCollection? belongsToCollection, 
-      num? budget, 
-      List<Genres>? genres, 
-      String? homepage, 
-      num? id, 
-      String? imdbId, 
-      String? originalLanguage, 
-      String? originalTitle, 
-      String? overview, 
-      num? popularity, 
-      String? posterPath, 
-      List<ProductionCompanies>? productionCompanies, 
-      List<ProductionCountries>? productionCountries, 
-      String? releaseDate, 
-      num? revenue, 
-      num? runtime, 
-      List<SpokenLanguages>? spokenLanguages, 
-      String? status, 
-      String? tagline, 
-      String? title, 
-      bool? video, 
-      num? voteAverage, 
-      num? voteCount,}){
+    bool? adult,
+    String? backdropPath,
+    BelongsToCollection? belongsToCollection,
+    num? budget,
+    List<Genres>? genres,
+    String? homepage,
+    num? id,
+    String? imdbId,
+    String? originalLanguage,
+    String? originalTitle,
+    String? overview,
+    num? popularity,
+    String? posterPath,
+    List<ProductionCompanies>? productionCompanies,
+    List<ProductionCountries>? productionCountries,
+    String? releaseDate,
+    num? revenue,
+    num? runtime,
+    List<SpokenLanguages>? spokenLanguages,
+    String? status,
+    String? tagline,
+    String? title,
+    bool? video,
+    num? voteAverage,
+    num? voteCount,
+  }){
     _adult = adult;
     _backdropPath = backdropPath;
     _belongsToCollection = belongsToCollection;
@@ -52,10 +53,12 @@ class MovieDetails {
     _voteCount = voteCount;
 }
 
-  MovieDetails.fromJson(dynamic json) {
+  MovieDetails.fromJson(Map<String, dynamic> json) {
     _adult = json['adult'];
     _backdropPath = json['backdrop_path'];
-    _belongsToCollection = json['belongs_to_collection'] != null ? BelongsToCollection.fromJson(json['belongs_to_collection']) : null;
+    _belongsToCollection = json['belongs_to_collection'] != null
+        ? BelongsToCollection.fromJson(json['belongs_to_collection'])
+        : null;
     _budget = json['budget'];
     if (json['genres'] != null) {
       _genres = [];
@@ -238,6 +241,7 @@ MovieDetails copyWith({  bool? adult,
     map['video'] = _video;
     map['vote_average'] = _voteAverage;
     map['vote_count'] = _voteCount;
+
     return map;
   }
 
@@ -249,15 +253,16 @@ MovieDetails copyWith({  bool? adult,
 
 class SpokenLanguages {
   SpokenLanguages({
-      String? englishName, 
-      String? iso6391, 
-      String? name,}){
+    String? englishName,
+    String? iso6391,
+    String? name,
+  }){
     _englishName = englishName;
     _iso6391 = iso6391;
     _name = name;
 }
 
-  SpokenLanguages.fromJson(dynamic json) {
+  SpokenLanguages.fromJson(Map<String, dynamic> json) {
     _englishName = json['english_name'];
     _iso6391 = json['iso_639_1'];
     _name = json['name'];
@@ -281,6 +286,7 @@ SpokenLanguages copyWith({  String? englishName,
     map['english_name'] = _englishName;
     map['iso_639_1'] = _iso6391;
     map['name'] = _name;
+
     return map;
   }
 
@@ -291,13 +297,14 @@ SpokenLanguages copyWith({  String? englishName,
 
 class ProductionCountries {
   ProductionCountries({
-      String? iso31661, 
-      String? name,}){
+    String? iso31661,
+    String? name,
+  }){
     _iso31661 = iso31661;
     _name = name;
 }
 
-  ProductionCountries.fromJson(dynamic json) {
+  ProductionCountries.fromJson(Map<String, dynamic> json) {
     _iso31661 = json['iso_3166_1'];
     _name = json['name'];
   }
@@ -315,6 +322,7 @@ ProductionCountries copyWith({  String? iso31661,
     final map = <String, dynamic>{};
     map['iso_3166_1'] = _iso31661;
     map['name'] = _name;
+
     return map;
   }
 
@@ -327,17 +335,18 @@ ProductionCountries copyWith({  String? iso31661,
 
 class ProductionCompanies {
   ProductionCompanies({
-      num? id, 
-      String? logoPath, 
-      String? name, 
-      String? originCountry,}){
+    num? id,
+    String? logoPath,
+    String? name,
+    String? originCountry,
+  }){
     _id = id;
     _logoPath = logoPath;
     _name = name;
     _originCountry = originCountry;
 }
 
-  ProductionCompanies.fromJson(dynamic json) {
+  ProductionCompanies.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
     _logoPath = json['logo_path'];
     _name = json['name'];
@@ -367,6 +376,7 @@ ProductionCompanies copyWith({  num? id,
     map['logo_path'] = _logoPath;
     map['name'] = _name;
     map['origin_country'] = _originCountry;
+
     return map;
   }
 
@@ -377,13 +387,14 @@ ProductionCompanies copyWith({  num? id,
 
 class Genres {
   Genres({
-      num? id, 
-      String? name,}){
+    num? id,
+    String? name,
+  }){
     _id = id;
     _name = name;
 }
 
-  Genres.fromJson(dynamic json) {
+  Genres.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
     _name = json['name'];
   }
@@ -401,6 +412,7 @@ Genres copyWith({  num? id,
     final map = <String, dynamic>{};
     map['id'] = _id;
     map['name'] = _name;
+
     return map;
   }
 
@@ -413,17 +425,18 @@ Genres copyWith({  num? id,
 
 class BelongsToCollection {
   BelongsToCollection({
-      num? id, 
-      String? name, 
-      String? posterPath, 
-      String? backdropPath,}){
+    num? id,
+    String? name,
+    String? posterPath,
+    String? backdropPath,
+  }){
     _id = id;
     _name = name;
     _posterPath = posterPath;
     _backdropPath = backdropPath;
 }
 
-  BelongsToCollection.fromJson(dynamic json) {
+  BelongsToCollection.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
     _name = json['name'];
     _posterPath = json['poster_path'];
@@ -453,6 +466,7 @@ BelongsToCollection copyWith({  num? id,
     map['name'] = _name;
     map['poster_path'] = _posterPath;
     map['backdrop_path'] = _backdropPath;
+
     return map;
   }
 

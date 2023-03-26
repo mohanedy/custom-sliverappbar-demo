@@ -1,11 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class WatchNowButtonWidget extends StatelessWidget {
   const WatchNowButtonWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +11,7 @@ class WatchNowButtonWidget extends StatelessWidget {
       onPressed: () {},
       style: ButtonStyle(
         padding: MaterialStateProperty.all(
-          const EdgeInsets.all(0.0),
+          EdgeInsets.zero,
         ),
         elevation: MaterialStateProperty.all(0),
         shape: MaterialStateProperty.all(

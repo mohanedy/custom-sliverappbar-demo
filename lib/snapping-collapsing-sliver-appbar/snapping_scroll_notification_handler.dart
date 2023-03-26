@@ -12,18 +12,17 @@ class SnappingScrollNotificationHandler {
     required this.collapsedBarHeight,
     this.bottomBarHeight = 0.0,
     this.shouldAddHapticFeedback = false,
-  })
-      : assert(
-  expandedBarHeight > 0.0,
-  'Expanded Bar Height cannot be negative',
-  ),
-        assert(
-        collapsedBarHeight > 0.0,
-        'Collapsed bar height cannot have a negative value',
+  })  : assert(
+          expandedBarHeight > 0.0,
+          'Expanded Bar Height cannot be negative',
         ),
         assert(
-        collapsedBarHeight < expandedBarHeight,
-        'Expanded bar height value must have a higher value than the collapsed bar height value',
+          collapsedBarHeight > 0.0,
+          'Collapsed bar height cannot have a negative value',
+        ),
+        assert(
+          collapsedBarHeight < expandedBarHeight,
+          'Expanded bar height value must have a higher value than the collapsed bar height value',
         );
 
   factory SnappingScrollNotificationHandler.withHapticFeedback({
@@ -88,26 +87,36 @@ class SnappingScrollNotificationHandler {
     required ScrollController scrollController,
   }) {
     if (_shouldSnapAppBarFullyCollapsed(
-        currentScrollingPosition, expandThresholdPosition)) {
+      currentScrollingPosition,
+      expandThresholdPosition,
+    )) {
       _scrollToOffset(scrollController: scrollController, scrollToOffset: 0.0);
     } else if (_shouldSnapAppBarFullyExpanded(
-        currentScrollingPosition, expandThresholdPosition)) {
+      currentScrollingPosition,
+      expandThresholdPosition,
+    )) {
       _scrollToOffset(
-          scrollController: scrollController,
-          scrollToOffset: expandedBarHeight - collapsedBarHeight - (bottomBarHeight ?? 0.0));
+        scrollController: scrollController,
+        scrollToOffset:
+            expandedBarHeight - collapsedBarHeight - bottomBarHeight,
+      );
     }
   }
 
   /// Returns `true` if the app bar should snap to fully collapsed position.
-  bool _shouldSnapAppBarFullyCollapsed(double currentScrollingPosition,
-      double expandThresholdPosition) {
+  bool _shouldSnapAppBarFullyCollapsed(
+    double currentScrollingPosition,
+    double expandThresholdPosition,
+  ) {
     return currentScrollingPosition > collapsedBarHeight &&
         currentScrollingPosition < expandThresholdPosition;
   }
 
   /// Returns `true` if the app bar should snap to fully expanded position.
-  bool _shouldSnapAppBarFullyExpanded(double currentScrollingPosition,
-      double expandThresholdPosition) {
+  bool _shouldSnapAppBarFullyExpanded(
+    double currentScrollingPosition,
+    double expandThresholdPosition,
+  ) {
     return currentScrollingPosition > expandThresholdPosition &&
         currentScrollingPosition < expandedBarHeight;
   }
@@ -144,12 +153,11 @@ class SnappingScrollNotificationHandler {
     required double scrollToOffset,
   }) {
     Future.microtask(
-          () =>
-          scrollController.animateTo(
-            scrollToOffset,
-            duration: const Duration(milliseconds: 150),
-            curve: Curves.easeIn,
-          ),
+      () => scrollController.animateTo(
+        scrollToOffset,
+        duration: const Duration(milliseconds: 150),
+        curve: Curves.easeIn,
+      ),
     );
   }
 }

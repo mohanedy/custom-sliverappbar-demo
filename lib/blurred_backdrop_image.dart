@@ -1,14 +1,13 @@
 import 'dart:ui';
 
+import 'package:custom_sliver_app_bar/models/movie_details.dart';
 import 'package:flutter/material.dart';
-
-import 'models/movie_details.dart';
 
 class BlurredBackdropImage extends StatelessWidget {
   const BlurredBackdropImage({
-    Key? key,
+    super.key,
     required this.movieDetails,
-  }) : super(key: key);
+  });
 
   final MovieDetails movieDetails;
 
@@ -25,12 +24,13 @@ class BlurredBackdropImage extends StatelessWidget {
       ),
       height: MediaQuery.of(context).size.height / 1.5,
       child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 7.0, sigmaY: 7.0),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.0),
-            ),
-          )),
+        filter: ImageFilter.blur(sigmaX: 7.0, sigmaY: 7.0),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.0),
+          ),
+        ),
+      ),
     );
   }
 }

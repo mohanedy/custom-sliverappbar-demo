@@ -9,13 +9,13 @@ class FakeData {
       "id": 948485,
       "name": "The Batman Collection",
       "poster_path": "$_imageURL/rTCJB5axQ8XOmGbpJBsiHkhKq14.jpg",
-      "backdrop_path": "$_imageURL/qS2ViQwlWUECiAdkIuEaJZoq0QW.jpg"
+      "backdrop_path": "$_imageURL/qS2ViQwlWUECiAdkIuEaJZoq0QW.jpg",
     },
     "budget": 185000000,
     "genres": [
       {"id": 80, "name": "Crime"},
       {"id": 9648, "name": "Mystery"},
-      {"id": 53, "name": "Thriller"}
+      {"id": 53, "name": "Thriller"},
     ],
     "homepage": "https://www.thebatman.com",
     "id": 414906,
@@ -34,41 +34,41 @@ Sem nulla pharetra diam sit. Ut faucibus pulvinar elementum integer. A condiment
         "id": 174,
         "logo_path": "$_imageURL/IuAlhI9eVC9Z8UQWOIDdWRKSEJ.png",
         "name": "Warner Bros. Pictures",
-        "origin_country": "US"
+        "origin_country": "US",
       },
       {
         "id": 101405,
         "logo_path": null,
         "name": "6th & Idaho",
-        "origin_country": "US"
+        "origin_country": "US",
       },
       {
         "id": 119245,
         "logo_path": null,
         "name": "Dylan Clark Productions",
-        "origin_country": "US"
+        "origin_country": "US",
       },
       {
         "id": 128064,
         "logo_path": "$_imageURL/13F3Jf7EFAcREU0xzZqJnVnyGXu.png",
         "name": "DC Films",
-        "origin_country": "US"
-      }
+        "origin_country": "US",
+      },
     ],
     "production_countries": [
-      {"iso_3166_1": "US", "name": "United States of America"}
+      {"iso_3166_1": "US", "name": "United States of America"},
     ],
     "release_date": "2022-03-01",
     "revenue": 770836163,
     "runtime": 177,
     "spoken_languages": [
-      {"english_name": "English", "iso_639_1": "en", "name": "English"}
+      {"english_name": "English", "iso_639_1": "en", "name": "English"},
     ],
     "status": "Released",
     "tagline": "Unmask the truth.",
     "title": "The Batman",
     "video": false,
     "vote_average": 7.706,
-    "vote_count": 7223
+    "vote_count": 7223,
   });
 }

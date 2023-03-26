@@ -63,7 +63,6 @@ class MovieProfilePage extends HookWidget {
       expandedBar: ExpandedAppBarContent(
         movieDetails: movieDetails,
       ),
-      collapsedBarHeight: collapsedBarHeight,
       collapsedBar: AnimatedOpacity(
         duration: const Duration(milliseconds: 200),
         opacity: isCollapsed.value ? 1 : 0,
@@ -94,11 +93,9 @@ class MovieProfilePage extends HookWidget {
   }
 
   BorderRadius getBorderRadius(ValueNotifier<bool> isCollapsed) {
-    return isCollapsed.value == false
+    return !isCollapsed.value
         ? const BorderRadius.only(
-            topLeft: Radius.circular(
-              15,
-            ),
+            topLeft: Radius.circular(15),
             topRight: Radius.circular(
               15,
             ),

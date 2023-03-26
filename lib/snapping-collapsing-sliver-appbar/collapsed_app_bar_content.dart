@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 class CollapsedAppBarContent extends StatelessWidget {
 
   const CollapsedAppBarContent({
-    Key? key,
+    super.key,
     this.title,
     this.leading,
     this.trailing,
-  }) : super(key: key);
+  });
 
   final Widget? title;
   final Widget? leading;

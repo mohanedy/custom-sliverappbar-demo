@@ -4,16 +4,15 @@ import 'package:flutter/material.dart';
 
 class ExpandedAppBarContent extends StatelessWidget {
   const ExpandedAppBarContent({
-    Key? key,
+    super.key,
     required this.movieDetails,
-  }) : super(key: key);
+  });
 
   final MovieDetails movieDetails;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
@@ -92,7 +91,7 @@ class ExpandedAppBarContent extends StatelessWidget {
               ),
             ),
           ],
-        )
+        ),
       ],
     );
   }

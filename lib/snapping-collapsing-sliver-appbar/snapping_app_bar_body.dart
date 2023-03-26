@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SnappingAppBarBody extends StatelessWidget {
   const SnappingAppBarBody({
-    Key? key,
+    super.key,
     required this.scrollController,
     required this.expandedBar,
     required this.collapsedBar,
@@ -19,7 +19,7 @@ class SnappingAppBarBody extends StatelessWidget {
     this.backgroundColor,
     this.actions,
     this.bottom,
-  }) : super(key: key);
+  });
 
   final ScrollController scrollController;
 
@@ -72,10 +72,11 @@ class SnappingAppBarBody extends StatelessWidget {
             SliverToBoxAdapter(
               child: ConstrainedBox(
                 constraints: BoxConstraints(
-                    minHeight: MediaQuery.of(context).size.height),
+                  minHeight: MediaQuery.of(context).size.height,
+                ),
                 child: body,
               ),
-            )
+            ),
           ],
         ),
       ],
