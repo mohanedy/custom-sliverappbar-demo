@@ -4,7 +4,7 @@ class SnappingAppBarBody extends StatelessWidget {
   const SnappingAppBarBody({
     super.key,
     required this.scrollController,
-    required this.expandedBar,
+    required this.expandedContent,
     required this.collapsedBar,
     required this.collapsedBarHeight,
     required this.body,
@@ -15,7 +15,7 @@ class SnappingAppBarBody extends StatelessWidget {
     this.snap = false,
     this.stretch = false,
     this.backdropWidget,
-    this.expandedBarHeight,
+    this.expandedContentHeight,
     this.backgroundColor,
     this.actions,
     this.bottom,
@@ -23,11 +23,11 @@ class SnappingAppBarBody extends StatelessWidget {
 
   final ScrollController scrollController;
 
-  final Widget expandedBar;
+  final Widget expandedContent;
   final List<Widget>? actions;
   final Widget collapsedBar;
   final Widget body;
-  final double? expandedBarHeight;
+  final double? expandedContentHeight;
   final double collapsedBarHeight;
   final PreferredSizeWidget? bottom;
   final Widget? leading;
@@ -54,7 +54,7 @@ class SnappingAppBarBody extends StatelessWidget {
               floating: floating,
               stretch: stretch,
               bottom: bottom,
-              expandedHeight: expandedBarHeight,
+              expandedHeight: expandedContentHeight,
               collapsedHeight: collapsedBarHeight,
               centerTitle: false,
               pinned: pinned,
@@ -66,7 +66,7 @@ class SnappingAppBarBody extends StatelessWidget {
                     color: Colors.white,
                   ),
               flexibleSpace: FlexibleSpaceBar(
-                background: expandedBar,
+                background: expandedContent,
               ),
             ),
             SliverToBoxAdapter(

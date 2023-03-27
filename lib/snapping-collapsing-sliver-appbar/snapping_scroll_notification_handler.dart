@@ -1,3 +1,4 @@
+import 'package:custom_sliver_app_bar/snapping-collapsing-sliver-appbar/snapping_collapsing_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,16 +14,16 @@ class SnappingScrollNotificationHandler {
     this.bottomBarHeight = 0.0,
     this.shouldAddHapticFeedback = false,
   })  : assert(
-          expandedBarHeight > 0.0,
-          'Expanded Bar Height cannot be negative',
+  expandedBarHeight > 0.0,
+  'Expanded Bar Height cannot be negative',
+  ),
+        assert(
+        collapsedBarHeight > 0.0,
+        'Collapsed bar height cannot have a negative value',
         ),
         assert(
-          collapsedBarHeight > 0.0,
-          'Collapsed bar height cannot have a negative value',
-        ),
-        assert(
-          collapsedBarHeight < expandedBarHeight,
-          'Expanded bar height value must have a higher value than the collapsed bar height value',
+        collapsedBarHeight < expandedBarHeight,
+        'Expanded bar height value must have a higher value than the collapsed bar height value',
         );
 
   factory SnappingScrollNotificationHandler.withHapticFeedback({
@@ -44,16 +45,17 @@ class SnappingScrollNotificationHandler {
   bool handleScrollNotification({
     required ScrollNotification notification,
     required ScrollController scrollController,
-    required ValueNotifier<bool> isCollapsed,
+    required ValueNotifier<bool> isCollapsedValueNotifier,
+    CollapsingStateCallback? onCollapseStateChanged,
   }) {
-    _addHapticFeedback(isCollapsed);
+    _addHapticFeedback(isCollapsedValueNotifier);
 
     /// The position at which we either collapse or expand
     ///
     /// the threshold which if we exceed then we should expand
     /// otherwise we should collapse the appbar
     final double expandThresholdPosition =
-        (expandedBarHeight - collapsedBarHeight) / 2;
+        (expandedBarHeight - collapsedBarHeight) / 1.75;
 
     /// The current position of the scrolling
     final double currentScrollingPosition = scrollController.offset;
@@ -61,9 +63,10 @@ class SnappingScrollNotificationHandler {
     /// sets the collapsed and expanded views as the user scrolls
     //region Update isCollapsed value as user scrolls
     _updateIsAppBarCollapsed(
-      isCollapsed: isCollapsed,
+      isCollapsed: isCollapsedValueNotifier,
       scrollController: scrollController,
       expandThresholdPosition: expandThresholdPosition,
+      onCollapseStateChanged: onCollapseStateChanged,
     );
     //endregion
 
@@ -86,12 +89,12 @@ class SnappingScrollNotificationHandler {
     required double expandThresholdPosition,
     required ScrollController scrollController,
   }) {
-    if (_shouldSnapAppBarFullyCollapsed(
+    if (_shouldSnapAppBarFullyExpanded(
       currentScrollingPosition,
       expandThresholdPosition,
     )) {
       _scrollToOffset(scrollController: scrollController, scrollToOffset: 0.0);
-    } else if (_shouldSnapAppBarFullyExpanded(
+    } else if (_shouldSnapAppBarFullyCollapsed(
       currentScrollingPosition,
       expandThresholdPosition,
     )) {
@@ -108,8 +111,8 @@ class SnappingScrollNotificationHandler {
     double currentScrollingPosition,
     double expandThresholdPosition,
   ) {
-    return currentScrollingPosition > collapsedBarHeight &&
-        currentScrollingPosition < expandThresholdPosition;
+    return currentScrollingPosition > expandThresholdPosition &&
+        currentScrollingPosition < expandedBarHeight - collapsedBarHeight;
   }
 
   /// Returns `true` if the app bar should snap to fully expanded position.
@@ -117,8 +120,7 @@ class SnappingScrollNotificationHandler {
     double currentScrollingPosition,
     double expandThresholdPosition,
   ) {
-    return currentScrollingPosition > expandThresholdPosition &&
-        currentScrollingPosition < expandedBarHeight;
+    return currentScrollingPosition < expandThresholdPosition;
   }
 
   /// Adds and triggers haptic feedback
@@ -139,9 +141,15 @@ class SnappingScrollNotificationHandler {
     required ValueNotifier<bool> isCollapsed,
     required ScrollController scrollController,
     required double expandThresholdPosition,
+    CollapsingStateCallback? onCollapseStateChanged,
   }) {
     isCollapsed.value = scrollController.hasClients &&
         scrollController.offset > expandThresholdPosition;
+    onCollapseStateChanged?.call(
+      isCollapsed.value,
+      scrollController.offset,
+      scrollController.position.maxScrollExtent,
+    );
   }
 
   /// Scrolls to the calculated [scrollToOffset] from the previous step
@@ -153,9 +161,9 @@ class SnappingScrollNotificationHandler {
     required double scrollToOffset,
   }) {
     Future.microtask(
-      () => scrollController.animateTo(
+          () => scrollController.animateTo(
         scrollToOffset,
-        duration: const Duration(milliseconds: 150),
+        duration: const Duration(milliseconds: 100),
         curve: Curves.easeIn,
       ),
     );
