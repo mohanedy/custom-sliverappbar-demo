@@ -17,14 +17,10 @@ class MovieProfilePage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final isCollapsedValueNotifier = useState(false);
-    final scrollPercentValueNotifier = useState(0.0);
 
-    /// Triggers scrolling only when necessary
-
-    return SnappingCollapsingAppBar.withAnimatedExpnandedContent(
+    return SnappingCollapsingAppBar(
       onCollapseStateChanged: (isCollapsed, scrollingOffset, maxExtent) {
         isCollapsedValueNotifier.value = isCollapsed;
-        scrollPercentValueNotifier.value = 1 - scrollingOffset / maxExtent;
       },
       backgroundColor:
           isCollapsedValueNotifier.value ? Colors.black : Colors.transparent,

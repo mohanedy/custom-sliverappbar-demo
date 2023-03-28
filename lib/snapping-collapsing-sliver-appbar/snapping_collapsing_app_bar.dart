@@ -1,4 +1,3 @@
-import 'package:custom_sliver_app_bar/snapping-collapsing-sliver-appbar/expanded_content_type.dart';
 import 'package:custom_sliver_app_bar/snapping-collapsing-sliver-appbar/snapping_app_bar_body.dart';
 import 'package:custom_sliver_app_bar/snapping-collapsing-sliver-appbar/snapping_scroll_notification_handler.dart';
 import 'package:flutter/material.dart';
@@ -11,70 +10,6 @@ typedef CollapsingStateCallback = void Function(
 );
 
 class SnappingCollapsingAppBar extends HookWidget {
-  const SnappingCollapsingAppBar({
-    super.key,
-    required this.expandedContent,
-    required this.collapsedContent,
-    required this.body,
-    this.onCollapseStateChanged,
-    this.expandedContentHeight,
-    this.scrollController,
-    this.scrollBehavior,
-    this.floating = false,
-    this.pinned = true,
-    this.snap = false,
-    this.stretch = false,
-    this.bottom,
-    this.leading,
-    this.actions,
-    this.collapsedBarHeight = 60.0,
-    this.backdropWidget,
-    this.backgroundColor,
-    this.expandedContentType = ExpandedContentType.normal,
-  });
-
-  factory SnappingCollapsingAppBar.withAnimatedExpnandedContent(
-    {
-      Key? key,
-      required Widget expandedContent,
-      required Widget collapsedContent,
-      required Widget body,
-      CollapsingStateCallback? onCollapseStateChanged,
-      double? expandedContentHeight,
-      ScrollController? scrollController,
-      ScrollBehavior? scrollBehavior,
-      bool floating = false,
-      bool pinned = true,
-      bool snap = false,
-      bool stretch = false,
-      PreferredSizeWidget? bottom,
-      Widget? leading,
-      List<Widget>? actions,
-      double collapsedBarHeight = 60.0,
-      Widget? backdropWidget,
-      Color? backgroundColor,
-    }) => SnappingCollapsingAppBar(
-      key: key,
-      expandedContent: expandedContent,
-      collapsedContent: collapsedContent,
-      body: body,
-      onCollapseStateChanged: onCollapseStateChanged,
-      expandedContentHeight: expandedContentHeight,
-      scrollController: scrollController,
-      scrollBehavior: scrollBehavior,
-      floating: floating,
-      pinned: pinned,
-      snap: snap,
-      stretch: stretch,
-      bottom: bottom,
-      leading: leading,
-      actions: actions,
-      collapsedBarHeight: collapsedBarHeight,
-      backdropWidget: backdropWidget,
-      backgroundColor: backgroundColor,
-      expandedContentType: ExpandedContentType.animatedOpacity,
-    );
-
   final ScrollController? scrollController;
 
   /// The content that is shown when the appBar is expanded
@@ -114,9 +49,38 @@ class SnappingCollapsingAppBar extends HookWidget {
   ///
   final CollapsingStateCallback? onCollapseStateChanged;
 
-  /// If the [ExpandedContent] should be animated in scrolling state or not
+  /// The duration of the animation when the [ExpandedContent] is collapsing or expanding
   ///
-  final ExpandedContentType expandedContentType;
+  /// Defaults to [Duration(milliseconds: 300)]
+  final Duration? animationDuration;
+
+  /// The curve of the animation as the [ExpandedContent] is collapsing or expanding
+  ///
+  /// Defaults to [Curves.easeInOut]
+  final Curve? animationCurve;
+
+  const SnappingCollapsingAppBar({
+    super.key,
+    required this.expandedContent,
+    required this.collapsedContent,
+    required this.body,
+    this.onCollapseStateChanged,
+    this.expandedContentHeight,
+    this.scrollController,
+    this.scrollBehavior,
+    this.floating = false,
+    this.pinned = true,
+    this.snap = false,
+    this.stretch = false,
+    this.bottom,
+    this.leading,
+    this.actions,
+    this.collapsedBarHeight = 60.0,
+    this.backdropWidget,
+    this.backgroundColor,
+    this.animationDuration = const Duration(milliseconds: 300),
+    this.animationCurve = Curves.easeInOut,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -131,13 +95,25 @@ class SnappingCollapsingAppBar extends HookWidget {
       collapsedBarHeight: collapsedBarHeight,
       bottomBarHeight: bottom?.preferredSize.height ?? 0.0,
     );
+    final scrollPercentValueNotifier = useState(0.0);
+    final animatedOpacity = useState(1.0);
 
     return NotificationListener<ScrollNotification>(
       onNotification: (notification) =>
           snappingScrollNotificationHandler.handleScrollNotification(
-            notification: notification,
+        notification: notification,
         isCollapsedValueNotifier: isCollapsedValueNotifier,
-        onCollapseStateChanged: onCollapseStateChanged,
+        onCollapseStateChanged: (isCollapsed, scrollingOffset, maxExtent) {
+          onCollapseStateChanged?.call(
+            isCollapsedValueNotifier.value,
+            controller.offset,
+            controller.position.maxScrollExtent,
+          );
+
+          scrollPercentValueNotifier.value = 1 - scrollingOffset / maxExtent;
+          animatedOpacity.value =
+              _calculateOpacity(scrollPercentValueNotifier.value);
+        },
         scrollController: controller,
       ),
       child: SnappingAppBarBody(
@@ -145,10 +121,10 @@ class SnappingCollapsingAppBar extends HookWidget {
         backdropWidget: backdropWidget,
         collapsedBar: collapsedContent,
         bottom: bottom,
-        expandedContent: expandedContentType.getExpandedContentWidget(
-          expandedContent,
-          controller,
-          expandedContentHeight,
+        expandedContent: AnimatedOpacity(
+          duration: const Duration(milliseconds: 200),
+          opacity: animatedOpacity.value,
+          child: expandedContent,
         ),
         leading: leading,
         actions: actions,
@@ -163,5 +139,41 @@ class SnappingCollapsingAppBar extends HookWidget {
         backgroundColor: backgroundColor,
       ),
     );
+  }
+
+  /// Calculates the opacity based on the scroll percentage.
+  ///
+  /// The opacity is calculated as follows:
+  /// - If the scroll percentage is less than [opacityThreshold],
+  /// the opacity is 0.0.
+  ///
+  /// - If the scroll percentage is less than [maxScrollPercentage],
+  /// the opacity is
+  /// [scrollPercentage] minus [opacityAdjustment].
+  ///
+  /// - Otherwise, the opacity is [scrollPercentage].
+  ///
+  /// Throws an [ArgumentError] if [scrollPercentage] is not between 0 and 1.0.
+  ///
+  /// Params:
+  /// - [scrollPercentage]: the percentage of the scroll position, a double value
+  /// Returns:
+  /// - The calculated opacity, a double value
+  double _calculateOpacity(double scrollPercentage) {
+    const double opacityThreshold = 0.5;
+    const double opacityAdjustment = 0.5;
+    const double maxScrollPercentage = 1.0;
+
+    if (scrollPercentage < 0 || scrollPercentage > maxScrollPercentage) {
+      throw ArgumentError('scrollPercentage must be between 0 and 1.0');
+    }
+
+    if (scrollPercentage < opacityThreshold) {
+      return 0.0;
+    } else if (scrollPercentage < maxScrollPercentage) {
+      return scrollPercentage - opacityAdjustment;
+    } else {
+      return scrollPercentage;
+    }
   }
 }
