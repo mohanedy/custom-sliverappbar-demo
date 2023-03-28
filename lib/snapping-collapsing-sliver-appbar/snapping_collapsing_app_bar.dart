@@ -42,7 +42,13 @@ class SnappingCollapsingAppBar extends HookWidget {
   ///
   /// (e.g. a blurred image of the movie poster)
   final Widget? backdropWidget;
-  final Color? backgroundColor;
+
+  /// The background color of the expanded appbar.
+  final Color? expandedBackgroundColor;
+
+  ///  The background color of the collapsed appbar.
+  final Color? collapsedBackgroundColor;
+  
   final ScrollBehavior? scrollBehavior;
 
   /// Callback that is called when the [ExpandedContent] is collapsed or expanded
@@ -77,7 +83,8 @@ class SnappingCollapsingAppBar extends HookWidget {
     this.actions,
     this.collapsedBarHeight = 60.0,
     this.backdropWidget,
-    this.backgroundColor,
+    this.expandedBackgroundColor,
+    this.collapsedBackgroundColor,
     this.animationDuration = const Duration(milliseconds: 300),
     this.animationCurve = Curves.easeInOut,
   });
@@ -136,7 +143,9 @@ class SnappingCollapsingAppBar extends HookWidget {
         scrollBehavior: scrollBehavior,
         collapsedBarHeight: collapsedBarHeight,
         expandedContentHeight: defaultExpandedContentHeight,
-        backgroundColor: backgroundColor,
+        collapsedBackgroundColor: collapsedBackgroundColor,
+        expandedBackgroundColor: expandedBackgroundColor,
+        isCollapsed: isCollapsedValueNotifier.value,
       ),
     );
   }

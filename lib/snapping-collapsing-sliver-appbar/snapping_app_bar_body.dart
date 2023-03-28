@@ -16,9 +16,11 @@ class SnappingAppBarBody extends StatelessWidget {
     this.stretch = false,
     this.backdropWidget,
     this.expandedContentHeight,
-    this.backgroundColor,
+    this.collapsedBackgroundColor,
+    this.expandedBackgroundColor,
     this.actions,
     this.bottom,
+    this.isCollapsed = false,
   });
 
   final ScrollController scrollController;
@@ -35,8 +37,10 @@ class SnappingAppBarBody extends StatelessWidget {
   final bool floating;
   final bool snap;
   final bool stretch;
+  final bool isCollapsed;
   final Widget? backdropWidget;
-  final Color? backgroundColor;
+  final Color? collapsedBackgroundColor;
+  final Color? expandedBackgroundColor;
   final ScrollBehavior? scrollBehavior;
 
   @override
@@ -60,11 +64,9 @@ class SnappingAppBarBody extends StatelessWidget {
               pinned: pinned,
               elevation: 0,
               title: collapsedBar,
-              backgroundColor: backgroundColor,
-              leading: leading ??
-                  const BackButton(
-                    color: Colors.white,
-                  ),
+              automaticallyImplyLeading: false,
+              backgroundColor: isCollapsed? collapsedBackgroundColor : expandedBackgroundColor,
+              leading: leading,
               flexibleSpace: FlexibleSpaceBar(
                 background: expandedContent,
               ),
