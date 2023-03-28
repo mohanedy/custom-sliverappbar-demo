@@ -48,7 +48,6 @@ class SnappingScrollNotificationHandler {
     required ValueNotifier<bool> isCollapsedValueNotifier,
     CollapsingStateCallback? onCollapseStateChanged,
   }) {
-    _addHapticFeedback(isCollapsedValueNotifier);
 
     /// The position at which we either collapse or expand
     ///
@@ -101,25 +100,25 @@ class SnappingScrollNotificationHandler {
       _scrollToOffset(
         scrollController: scrollController,
         scrollToOffset:
-            expandedBarHeight - collapsedBarHeight - bottomBarHeight,
+        expandedBarHeight - collapsedBarHeight - bottomBarHeight,
       );
     }
   }
 
   /// Returns `true` if the app bar should snap to fully collapsed position.
   bool _shouldSnapAppBarFullyCollapsed(
-    double currentScrollingPosition,
-    double expandThresholdPosition,
-  ) {
+      double currentScrollingPosition,
+      double expandThresholdPosition,
+      ) {
     return currentScrollingPosition > expandThresholdPosition &&
         currentScrollingPosition < expandedBarHeight - collapsedBarHeight;
   }
 
   /// Returns `true` if the app bar should snap to fully expanded position.
   bool _shouldSnapAppBarFullyExpanded(
-    double currentScrollingPosition,
-    double expandThresholdPosition,
-  ) {
+      double currentScrollingPosition,
+      double expandThresholdPosition,
+      ) {
     return currentScrollingPosition < expandThresholdPosition;
   }
 
